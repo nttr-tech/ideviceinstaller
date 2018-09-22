@@ -450,7 +450,19 @@ static void parse_opts(int argc, char **argv)
 			print_usage(argc, argv);
 			exit(0);
 		case 'u':
-			udid = strdup(optarg);
+			if (str_is_udid(optarg) == 0) {
+				udid = strdup(optarg);
+				break;
+			}
+			if (strchr(optarg, '.') != NULL) {
+				fprintf(stderr, "WARNING: Using \"-u\" for \"--uninstall\" is deprecated. Please use \"-U\" instead.\n");
+				cmd = CMD_UNINSTALL;
+				appid = strdup(optarg);
+			} else {
+				printf("ERROR: Invalid UDID specified\n");
+				print_usage(argc, argv);
+				exit(2);
+			}
 			break;
 		case 'l':
 			cmd = CMD_LIST_APPS;
