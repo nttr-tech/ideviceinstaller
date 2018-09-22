@@ -347,17 +347,13 @@ static void idevice_wait_for_command_to_complete()
 
 static int str_is_udid(const char* str)
 {
-	const char allowed[] = "0123456789abcdefABCDEF";
+	const char allowed[] = "0123456789abcdefABCDEF-";
 
 	/* handle NULL case */
 	if (str == NULL)
 		return -1;
 
 	int length = strlen(str);
-
-	/* verify length */
-	if (length != 40)
-		return -1;
 
 	/* check for invalid characters */
 	while(length--) {
@@ -378,7 +374,7 @@ static void print_usage(int argc, char **argv)
 	printf("Usage: %s OPTIONS\n", (name ? name + 1 : argv[0]));
 	printf("Manage apps on iOS devices.\n\n");
 	printf
-		("  -u, --udid UDID\tTarget specific device by its 40-digit device UDID.\n"
+		("  -u, --udid UDID\tTarget specific device by its device UDID.\n"
 		 "  -l, --list-apps\tList apps, possible options:\n"
 		 "       -o list_user\t- list user apps only (this is the default)\n"
 		 "       -o list_system\t- list system apps only\n"
